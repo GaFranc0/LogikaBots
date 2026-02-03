@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logika Bots - Links</title>
+
+    <link rel="icon" href="Imagens/logika logos.png">
+
+    <style>
+        body {
+            background-color: #050a18;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: white;
+            padding: 40px 20px; /* Aumentei o respiro lateral */
+            margin: 0;
+        }
+
+        .logo { 
+            width: 120px; /* Um pouco maior para destaque */
+            margin-bottom: 15px; 
+        }
+
+        .title { 
+            font-size: 1.4rem; 
+            font-weight: bold; 
+            margin-bottom: 30px;
+            letter-spacing: 1px;
+        }
+      
+        /* Estilo base dos botões */
+        .link-btn, .link-btn-tittle {
+            width: 100%; /* Ocupa a largura total disponível */
+            max-width: 500px; /* Limite para não ficar gigante no PC */
+            padding: 18px; /* Botões mais altos para facilitar o toque */
+            margin: 8px 0;
+            border-radius: 12px; /* Bordas um pouco mais arredondadas (moderno) */
+            text-align: center;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem; /* Fonte maior para leitura clara */
+            transition: 0.3s;
+            box-sizing: border-box; /* Garante que o padding não quebre a largura */
+            display: block;
+        }
+
+        .btn-primary { 
+            background-color: #00d27f; 
+            color: #050a18;
+            box-shadow: 0 4px 15px rgba(0, 210, 127, 0.3);
+        } 
+
+        .btn-secondary { 
+            border: 2px solid #00b4ff; 
+            color: white; 
+        } 
+      
+        .link-btn:hover { 
+            transform: scale(1.02); 
+            filter: brightness(1.1);
+        }
+
+        /* MEDIA QUERY: Ajustes finos para telas muito pequenas */
+        @media (max-width: 480px) {
+            body {
+                padding: 30px 15px;
+            }
+            .title {
+                font-size: 1.2rem;
+            }
+            .link-btn, .link-btn-tittle {
+                padding: 20px; /* Botão ainda mais alto no celular (fácil de clicar com o polegar) */
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <img src="Imagens/logika logos.png" class="logo" alt="Logika Bots Logo">
+    <div class="title">@LogikaBots</div>
+
+    <a href="#" class="link-btn-tittle btn-primary">⚡ NOSSOS LINKS ⚡</a>
+    <a href="https://logikabots.netlify.app/" class="link-btn btn-secondary">WebSite</a>
+    <a href="https://www.instagram.com/logikabots" class="link-btn btn-secondary">Instagram</a>
+    <a href="https://www.facebook.com/profile.php?id=61585565086895" class="link-btn btn-secondary">Facebook</a>
+    <a href="LINK_WHATSAPP" class="link-btn btn-secondary">Whatsapp</a>
+
+</body>
+</html>

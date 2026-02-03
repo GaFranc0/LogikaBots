@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Automação de WhatsApp para negócios locais em Limeira. Agendamento automático 24h.">
+    <meta name="theme-color" content="#020617">
+    <title>Logika Bots | Automação & Inteligência em Limeira</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <link rel="icon" type="image/png" href="images/logika logos ampliado.png">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        brand: {
+                            green: '#10b981',
+                            dark: '#020617',
+                        },
+                        slate: {
+                            850: '#151e2e',
+                            900: '#0f172a',
+                            950: '#020617',
+                        }
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                        'shimmer': 'shimmer 2s linear infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                        shimmer: {
+                            from: { backgroundPosition: '0 0' },
+                            to: { backgroundPosition: '-200% 0' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Estilos Globais */
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #020617;
+            color: #e2e8f0;
+            overflow-x: hidden; /* Evita scroll lateral */
+        }
+
+        /* Scrollbar Moderna */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #475569; }
+
+        /* Efeitos de Fundo */
+        .glow-bg {
+            background: radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.15) 0%, rgba(0, 0, 0, 0) 60%);
+        }
+        
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(148, 163, 184, 0.1);
+        }
+
+        /* Utilitários de Texto */
+        .text-gradient {
+            background: linear-gradient(to right, #60a5fa, #34d399);
+            -webkit-text-fill-color: transparent;
+        }
+
+        .text-gradient-hero {
+            background: linear-gradient(to right, #ffffff, #93c5fd);
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Fix para Mobile Menu */
+        .mobile-menu-open { overflow: hidden; }
+        
+        /* Ajuste fino para a box do Beta */
+        .beta-box-glow {
+            box-shadow: 0 0 40px -10px rgba(16, 185, 129, 0.2);
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-emerald-500 selection:text-white">
+
+    <nav class="fixed w-full z-50 transition-all duration-300 border-b border-white/5 bg-slate-950/90 backdrop-blur-md" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                
+                <div class="flex items-center gap-3 cursor-pointer group" onclick="window.scrollTo(0,0)">
+                    <div class="relative w-10 h-10 flex items-center justify-center bg-blue-600/10 rounded-lg border border-blue-500/20 group-hover:border-blue-500/50 transition-colors">
+                        <img src="images/Logo.png" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'" alt="Logika" class="w-8 h-8 object-contain">
+                        <i data-lucide="bot" class="w-6 h-6 text-blue-400 hidden"></i>
+                    </div>
+                    <span class="font-bold text-xl tracking-tight text-white hidden sm:block group-hover:text-blue-200 transition-colors">LOGIKA BOTS</span>
+                </div>
+                
+                <div class="hidden md:block">
+                    <div class="flex items-center space-x-8">
+                        <a href="#home" class="text-sm font-medium text-slate-300 hover:text-white transition-colors">Início</a>
+                        <a href="#solucoes" class="text-sm font-medium text-slate-300 hover:text-white transition-colors">Soluções</a>
+                        <a href="#quem-somos" class="text-sm font-medium text-slate-300 hover:text-white transition-colors">Sobre Nós</a>
+                        <a href="Termos.html" class="text-sm font-medium text-slate-300 hover:text-white transition-colors">Termos de Uso</a>
+                        
+                        <a href="LINK_WHATSAPP" target="_blank" 
+                           class="group relative inline-flex items-center justify-center px-6 py-2 text-sm font-bold text-white transition-all duration-200 bg-emerald-600 font-pj rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-600 hover:bg-emerald-700 shadow-[0_0_20px_rgba(16,185,129,0.3)] hover:shadow-[0_0_25px_rgba(16,185,129,0.5)]">
+                            Teste Grátis
+                            <i data-lucide="arrow-right" class="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-slate-300 hover:text-white p-2 rounded-md hover:bg-white/5 transition-colors">
+                        <i data-lucide="menu" class="w-7 h-7"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="fixed inset-0 z-[60] bg-slate-950 transform translate-x-full transition-transform duration-300 md:hidden flex flex-col pt-24 px-6 space-y-6 h-screen w-screen">
+            <button id="close-menu-btn" class="absolute top-6 right-6 text-slate-400 p-2 hover:bg-white/10 rounded-lg">
+                <i data-lucide="x" class="w-8 h-8"></i>
+            </button>
+            
+            <a href="#home" class="text-2xl font-semibold text-white border-b border-white/10 pb-4">Início</a>
+            <a href="#solucoes" class="text-2xl font-semibold text-white border-b border-white/10 pb-4">Soluções</a>
+            <a href="#quem-somos" class="text-2xl font-semibold text-white border-b border-white/10 pb-4">Quem Somos</a>
+            <a href="Termos.html" class="text-2xl font-semibold text-white border-b border-white/10 pb-4">Termos de Uso</a>
+            
+            <a href="LINK_WHATSAPP" target="_blank" 
+               class="bg-emerald-600 text-white py-4 rounded-xl text-center text-xl font-bold shadow-lg flex items-center justify-center gap-2">
+               <i data-lucide="whatsapp" class="w-6 h-6"></i> Testar Grátis Agora
+            </a>
+            
+            <div class="mt-auto pb-10 text-center text-slate-500 text-sm">
+                Logika Bots &copy; 2025<br>Limeira - SP
+            </div>
+        </div>
+    </nav>
+
+    <section id="home" class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden min-h-screen flex items-center justify-center">
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full glow-bg pointer-events-none"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+            
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-950/30 border border-blue-500/20 text-blue-300 text-xs font-semibold mb-8 animate-float shadow-[0_0_15px_rgba(59,130,246,0.1)] backdrop-blur-sm">
+                <i data-lucide="map-pin" class="w-3 h-3"></i>
+                Feito em Limeira/SP para Limeira e Região
+            </div>
+
+            <h1 class="text-5xl md:text-6xl lg:text-7xl font-extrabold text-white mb-6 tracking-tight leading-[1.1]">
+                Atendimento que seu cliente merece<br>
+                <span class="text-gradient">24 horas por dia.</span>
+            </h1>
+            
+            <p class="mt-4 text-lg md:text-xl text-slate-400 max-w-3xl mx-auto leading-relaxed mb-10">
+                Automatize seu WhatsApp sem perder o toque humano. Estamos selecionando 
+                <span class="text-white font-medium">comércios</span> para o nosso projeto piloto de agendamento automático.
+            </p>
+
+            <div class="max-w-2xl mx-auto mb-10">
+                <div class="relative group">
+                    <div class="absolute -inset-1 bg-gradient-to-r from-emerald-600 to-blue-600 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
+                    <div class="relative bg-slate-900 ring-1 ring-white/10 rounded-2xl p-6 md:p-8 beta-box-glow">
+                        <div class="flex items-center justify-center gap-2 text-emerald-400 text-xs font-bold tracking-widest uppercase mb-2">
+                            <i data-lucide="rocket" class="w-4 h-4"></i> Fase Beta - Projeto Piloto
+                        </div>
+                        <h2 class="text-2xl md:text-3xl font-bold text-white mb-2">
+                            15 DIAS GRÁTIS NO SEU NEGÓCIO
+                        </h2>
+                        <p class="text-slate-400 text-sm">
+                            Vagas limitadas para a primeira turma de testes em Limeira.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="LINK_WHATSAPP" target="_blank" 
+                   class="flex items-center justify-center gap-3 bg-emerald-500 hover:bg-emerald-600 text-white px-8 py-4 rounded-xl font-bold text-lg transition-all shadow-[0_0_30px_rgba(16,185,129,0.4)] hover:shadow-[0_0_40px_rgba(16,185,129,0.6)] hover:-translate-y-1">
+                    Quero Testar Grátis
+                </a>
+                
+                <a href="#quem-somos" class="flex items-center justify-center gap-3 glass-panel hover:bg-slate-800 text-white px-8 py-4 rounded-xl font-bold text-lg transition-all border border-slate-700 hover:border-blue-500/50">
+                    Conhecer a Equipe
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 bg-slate-950 border-y border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-sm font-bold text-blue-500 uppercase tracking-wide">Diferenciais</h2>
+                <h3 class="text-3xl font-bold text-white mt-2">Por que entrar no piloto?</h3>
+            </div>
+            
+            <div class="w-full py-10 bg-slate-950"> 
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-11/12 lg:w-3/4 mx-auto">
+        
+                    <div class="p-6 bg-slate-900/50 rounded-2xl border border-white/5 hover:border-emerald-500/30 transition-all duration-300">
+                        <div class="w-12 h-12 bg-emerald-500/10 rounded-lg flex items-center justify-center mb-4">
+                            <i data-lucide="clock" class="w-6 h-6 text-emerald-400"></i>
+                        </div>
+                        <h4 class="text-lg font-bold text-white mb-2">Venda 24h</h4>
+                        <p class="text-slate-400 text-sm">Seu cliente quer agendar domingo à noite. Não deixe ele esperando até segunda.</p>
+                    </div>
+
+                    <div class="p-6 bg-slate-900/50 rounded-2xl border border-white/5 hover:border-purple-500/30 transition-all duration-300">
+                        <div class="w-12 h-12 bg-purple-500/10 rounded-lg flex items-center justify-center mb-4">
+                            <i data-lucide="layout-dashboard" class="w-6 h-6 text-purple-400"></i>
+                        </div>
+                        <h4 class="text-lg font-bold text-white mb-2">Controle Total</h4>
+                        <p class="text-slate-400 text-sm">Painel administrativo simples. Veja agendamentos, faturamento e clientes em tempo real.</p>
+                    </div>
+
+                    <div class="p-6 bg-slate-900/50 rounded-2xl border border-white/5 hover:border-orange-500/30 transition-all duration-300">
+                        <div class="w-12 h-12 bg-orange-500/10 rounded-lg flex items-center justify-center mb-4">
+                            <i data-lucide="zap" class="w-6 h-6 text-orange-400"></i>
+                        </div>
+                        <h4 class="text-lg font-bold text-white mb-2">Instalação Rápida</h4>
+                        <p class="text-slate-400 text-sm">Sem baixar apps complexos. Tudo roda na nuvem e conecta no seu WhatsApp atual.</p>
+                    </div>
+
+                </div>
+            </div>
+    </section>
+
+    <section id="demo" class="py-24 bg-slate-900 relative overflow-hidden">
+        <div class="absolute right-0 top-0 w-1/2 h-full bg-emerald-500/5 blur-[120px] pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-5xl font-bold text-white mb-4">Teste a Tecnologia Agora</h2>
+                <p class="text-slate-400 max-w-2xl mx-auto text-lg">
+                    Sem cadastro. Sem cartão. Apenas use o chat à esquerda e veja a "mágica" acontecendo no painel administrativo à direita.
+                </p>
+                
+                <div class="mt-6 inline-flex items-center gap-2 bg-yellow-500/10 border border-yellow-500/20 px-4 py-2 rounded-lg">
+                    <i data-lucide="alert-circle" class="w-4 h-4 text-yellow-500"></i>
+                    <span class="text-xs text-yellow-200 font-medium">
+                        Nota: Os dados no painel podem levar até <strong>3 minutos</strong> para sincronizar com o banco de dados do Google.
+                    </span>
+                </div>
+            </div>
+
+            <div class="flex flex-col xl:flex-row items-center justify-center gap-10 lg:gap-16 min-h-[700px]">
+                
+                <div class="relative w-[320px] md:w-[380px] h-[650px] shrink-0 transform transition-transform hover:scale-[1.01] duration-500">
+                    <div class="absolute inset-0 bg-slate-800 rounded-[3rem] shadow-2xl border-4 border-slate-700"></div>
+                    <div class="absolute inset-[4px] bg-black rounded-[2.8rem] border border-slate-800"></div>
+                    <div class="absolute top-6 left-1/2 -translate-x-1/2 w-28 h-7 bg-black rounded-full z-20 flex items-center justify-center gap-2">
+                        <div class="w-1.5 h-1.5 rounded-full bg-slate-800/50"></div>
+                        <div class="w-12 h-1.5 rounded-full bg-slate-900"></div>
+                    </div>
+                    
+                    <div class="absolute inset-[12px] bg-slate-50 rounded-[2.2rem] overflow-hidden flex flex-col">
+                        <div class="bg-[#075e54] text-white p-4 pt-10 pb-3 flex items-center gap-3 shadow-md z-10">
+                            <i data-lucide="arrow-left" class="w-5 h-5"></i>
+                            <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
+                                <i data-lucide="bot" class="w-5 h-5 text-white"></i>
+                            </div>
+                            <div class="flex-1">
+                                <p class="font-bold text-sm leading-tight">Agendamento Bot</p>
+                                <p class="text-[10px] opacity-80">Online agora</p>
+                            </div>
+                            <i data-lucide="video" class="w-5 h-5"></i>
+                            <i data-lucide="phone" class="w-5 h-5 ml-3"></i>
+                        </div>
+                        
+                        <div class="flex-1 bg-[#e5ddd5] relative">
+                            <div class="absolute inset-0 opacity-10" style="background-image: url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png');"></div>
+                            <typebot-standard style="width: 100%; height: 100%; position: relative; z-index: 5;"></typebot-standard>
+                        </div>
+                    </div>
+                    
+                    <div class="absolute inset-[12px] rounded-[2.2rem] bg-gradient-to-tr from-white/10 to-transparent pointer-events-none z-30"></div>
+                </div>
+
+                <div class="w-full max-w-3xl flex flex-col h-[650px]">
+                    <div class="flex items-center justify-between mb-4 px-2">
+                        <div class="flex items-center gap-3">
+                            <div class="p-2 bg-blue-500/10 rounded-lg border border-blue-500/20">
+                                <i data-lucide="layout-dashboard" class="w-5 h-5 text-blue-400"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-white">Painel Administrativo</h3>
+                                <p class="text-xs text-slate-400">Visão em tempo real do Lojista</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="flex h-2 w-2 relative">
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                            </span>
+                            <span class="text-xs font-mono text-emerald-400 uppercase tracking-widest">Live Sync</span>
+                        </div>
+                    </div>
+
+                    <div class="flex-1 bg-slate-950 border border-slate-800 rounded-2xl shadow-2xl overflow-hidden flex flex-col relative group">
+                        <div class="absolute inset-0 border-2 border-transparent group-hover:border-blue-500/20 rounded-2xl transition-colors pointer-events-none z-20"></div>
+
+                        <div class="grid grid-cols-2 md:grid-cols-3 gap-px bg-slate-800 border-b border-slate-800">
+                            <div class="bg-slate-900 p-4 md:p-6">
+                                <p class="text-xs text-slate-500 uppercase font-bold tracking-wider mb-1">Agendamentos</p>
+                                <p class="text-2xl md:text-3xl font-bold text-white" id="stat-count">0</p>
+                            </div>
+                            <div class="bg-slate-900 p-4 md:p-6">
+                                <p class="text-xs text-slate-500 uppercase font-bold tracking-wider mb-1">Faturamento (Est.)</p>
+                                <p class="text-2xl md:text-3xl font-bold text-emerald-400" id="stat-revenue">R$ 0,00</p>
+                            </div>
+                            <div class="hidden md:block bg-slate-900 p-4 md:p-6">
+                                <p class="text-xs text-slate-500 uppercase font-bold tracking-wider mb-1">Status API</p>
+                                <div class="flex items-center gap-2 mt-2">
+                                    <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+                                    <span class="text-sm font-medium text-slate-300">Conectado</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex-1 flex flex-col min-h-0 bg-[#0b1120]">
+                            <div class="grid grid-cols-12 gap-4 px-6 py-3 bg-slate-900/80 backdrop-blur border-b border-slate-800 text-xs font-bold text-slate-500 uppercase tracking-wider sticky top-0 z-10">
+                                <div class="col-span-3">Cliente</div>
+                                <div class="col-span-3">Data/Hora</div>
+                                <div class="col-span-3 hidden md:block">Serviço</div>
+                                <div class="col-span-3 md:col-span-2 text-right">Valor</div>
+                                <div class="col-span-3 md:col-span-1 text-right">Status</div>
+                            </div>
+
+                            <div id="terminal-logs" class="flex-1 overflow-y-auto overflow-x-hidden relative">
+                                <div id="loading-skeleton" class="p-6 space-y-4">
+                                    <div class="h-12 bg-slate-800/50 rounded-lg w-full animate-pulse"></div>
+                                    <div class="h-12 bg-slate-800/50 rounded-lg w-full animate-pulse delay-75"></div>
+                                    <div class="h-12 bg-slate-800/50 rounded-lg w-full animate-pulse delay-100"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="p-3 bg-slate-900 border-t border-slate-800 flex justify-between items-center text-xs text-slate-500">
+                            <div class="flex items-center gap-2 font-mono">
+                                <i data-lucide="database" class="w-3 h-3"></i>
+                                <span>sheets_v4_connector</span>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <span id="last-update">Sincronizando...</span>
+                                <button onclick="window.forceUpdate()" class="text-blue-400 hover:text-white transition-colors flex items-center gap-1 cursor-pointer">
+                                    <i data-lucide="refresh-cw" class="w-3 h-3"></i> Atualizar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="solucoes" class="py-24 bg-slate-950 border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-white mb-4">Adaptável ao seu Negócio</h2>
+                <p class="text-slate-400">Não importa o nicho, a lógica se adapta.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="glass-panel p-8 rounded-2xl hover:bg-slate-900 transition-all duration-300 group hover:-translate-y-2">
+                    <div class="w-14 h-14 bg-blue-600/20 rounded-xl flex items-center justify-center mb-6 text-blue-400 group-hover:scale-110 transition-transform">
+                        <i data-lucide="scissors" class="w-7 h-7"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Beleza & Estética</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Para Barbearias, Salões e Clínicas. O bot lê sua agenda, oferece horários vagos e confirma o compromisso.
+                    </p>
+                </div>
+
+                <div class="glass-panel p-8 rounded-2xl hover:bg-slate-900 transition-all duration-300 group hover:-translate-y-2">
+                    <div class="w-14 h-14 bg-orange-600/20 rounded-xl flex items-center justify-center mb-6 text-orange-400 group-hover:scale-110 transition-transform">
+                        <i data-lucide="pizza" class="w-7 h-7"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Delivery de Comida</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Cardápio digital interativo. O cliente monta a pizza/lanche, escolhe borda/adicional e o bot manda para a cozinha.
+                    </p>
+                </div>
+
+                <div class="glass-panel p-8 rounded-2xl hover:bg-slate-900 transition-all duration-300 group hover:-translate-y-2">
+                    <div class="w-14 h-14 bg-emerald-600/20 rounded-xl flex items-center justify-center mb-6 text-emerald-400 group-hover:scale-110 transition-transform">
+                        <i data-lucide="shopping-bag" class="w-7 h-7"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Varejo & Lojas</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Catálogo de produtos, verificação de estoque e cálculo de frete automático. Venda enquanto dorme.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 bg-slate-900 relative border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-white mb-4">Como iniciamos o piloto?</h2>
+                <p class="text-slate-400">Processo simplificado em 3 etapas para empresas de Limeira.</p>
+            </div>
+
+            <div class="relative">
+                <div class="hidden md:block absolute top-12 left-0 w-full h-1 bg-slate-800 -z-0"></div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                    <div class="relative flex flex-col items-center text-center z-10">
+                        <div class="w-24 h-24 bg-slate-900 border-4 border-slate-800 rounded-full flex items-center justify-center mb-6">
+                            <span class="text-3xl font-bold text-blue-500">1</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">Solicitação</h3>
+                        <p class="text-slate-400 text-sm">Você clica no botão "Testar Grátis" e fala direto com nosso time.</p>
+                    </div>
+
+                    <div class="relative flex flex-col items-center text-center z-10">
+                        <div class="w-24 h-24 bg-slate-900 border-4 border-slate-800 rounded-full flex items-center justify-center mb-6">
+                            <span class="text-3xl font-bold text-blue-500">2</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">Configuração</h3>
+                        <p class="text-slate-400 text-sm">Adaptamos o fluxo do robô para o seu nicho em até 24h.</p>
+                    </div>
+
+                    <div class="relative flex flex-col items-center text-center z-10">
+                        <div class="w-24 h-24 bg-slate-900 border-4 border-slate-800 rounded-full flex items-center justify-center mb-6">
+                            <span class="text-3xl font-bold text-emerald-500">3</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">Ativação</h3>
+                        <p class="text-slate-400 text-sm">Você recebe o acesso e começa a usar por 15 dias grátis.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="quem-somos" class="py-24 bg-slate-950 relative overflow-hidden">
+        <div class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 brightness-100"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
+                <div class="lg:w-1/2">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-800 text-slate-300 text-xs font-bold mb-6 uppercase tracking-wide border border-slate-700">
+                        <i data-lucide="code-2" class="w-4 h-4 text-emerald-400"></i> Engineering Team
+                    </div>
+                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-6 leading-tight">Mentes Reais por trás da<br> <span class="text-emerald-500">Inteligência Artificial.</span></h2>
+                    <p class="text-slate-400 text-lg mb-6">
+                        A Logika Bots nasceu em Limeira com uma missão clara: democratizar a tecnologia. Grandes empresas usam IA há anos. Agora, a padaria e a oficina também podem usar.
+                    </p>
+                    <p class="text-slate-500 mb-8">
+                        Somos desenvolvedores e acima de tudo solucionadores de problemas.
+                    </p>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-8">
+                        <div class="flex items-center gap-4 p-5 rounded-2xl bg-slate-900/80 border border-slate-800 hover:border-blue-500/50 transition-all hover:-translate-y-1">
+                            <img src="images/Lucas.jpg" onerror="this.src='https://ui-avatars.com/api/?name=Lucas+Silva&background=0D8ABC&color=fff'" class="w-14 h-14 rounded-full object-cover border-2 border-blue-500 shadow-lg shadow-blue-500/20">
+                            <div>
+                                <p class="font-bold text-white text-lg">Lucas S. Granusso</p>
+                                <p class="text-xs text-blue-400 font-mono tracking-wide">CO-FOUNDER & TECH LEAD</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4 p-5 rounded-2xl bg-slate-900/80 border border-slate-800 hover:border-emerald-500/50 transition-all hover:-translate-y-1">
+                            <img src="images/FotoGabriel.jpeg" onerror="this.src='https://ui-avatars.com/api/?name=Gabriel+Franco&background=10B981&color=fff'" class="w-14 h-14 rounded-full object-cover border-2 border-emerald-500 shadow-lg shadow-emerald-500/20">
+                            <div>
+                                <p class="font-bold text-white text-lg">Gabriel D. Franco</p>
+                                <p class="text-xs text-emerald-400 font-mono tracking-wide">CO-FOUNDER & ARCHITECT</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="lg:w-1/2 relative">
+                    <div class="absolute inset-0 bg-blue-500/20 blur-[100px] rounded-full pointer-events-none"></div>
+                    <div class="glass-panel p-10 rounded-3xl relative border border-slate-700/50 shadow-2xl">
+                        <i data-lucide="quote" class="w-12 h-12 text-slate-700 mb-6 transform rotate-180"></i>
+                        <p class="text-xl md:text-2xl text-slate-200 italic font-light mb-8 leading-relaxed">
+                            "Nosso código não é apenas sobre automação. É sobre devolver tempo de vida para o empreendedor. Menos tempo no WhatsApp, mais tempo vivendo e crescendo o negócio."
+                        </p>
+                        <div class="flex items-center gap-4">
+                            <div class="h-1 w-20 bg-gradient-to-r from-blue-500 to-emerald-500 rounded-full"></div>
+                            <span class="text-sm text-slate-500">Logika Vision</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 bg-slate-900 border-t border-slate-800">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-white text-center mb-12">Perguntas Frequentes</h2>
+            
+            <div class="space-y-4">
+                <details class="group bg-slate-950 p-6 rounded-xl border border-slate-800 open:border-blue-500/30 transition-all">
+                    <summary class="flex justify-between items-center font-medium cursor-pointer list-none text-white">
+                        <span>Preciso deixar meu computador ligado?</span>
+                        <span class="transition group-open:rotate-180">
+                            <i data-lucide="chevron-down"></i>
+                        </span>
+                    </summary>
+                    <p class="text-slate-400 mt-3 group-open:animate-fadeIn">
+                        Não! Nosso sistema roda 100% na nuvem. Você conecta seu WhatsApp uma vez via QR Code e pode desligar o celular ou computador que o robô continua trabalhando.
+                    </p>
+                </details>
+
+                <details class="group bg-slate-950 p-6 rounded-xl border border-slate-800 open:border-blue-500/30 transition-all">
+                    <summary class="flex justify-between items-center font-medium cursor-pointer list-none text-white">
+                        <span>O robô substitui um atendente humano?</span>
+                        <span class="transition group-open:rotate-180">
+                            <i data-lucide="chevron-down"></i>
+                        </span>
+                    </summary>
+                    <p class="text-slate-400 mt-3 group-open:animate-fadeIn">
+                        Ele filtra e resolve 80% dos casos (agendamentos, dúvidas simples, cardápio). Para casos complexos, ele transfere para você ou sua equipe assumirem.
+                    </p>
+                </details>
+
+                <details class="group bg-slate-950 p-6 rounded-xl border border-slate-800 open:border-blue-500/30 transition-all">
+                    <summary class="flex justify-between items-center font-medium cursor-pointer list-none text-white">
+                        <span>Existe risco de banimento do WhatsApp?</span>
+                        <span class="transition group-open:rotate-180">
+                            <i data-lucide="chevron-down"></i>
+                        </span>
+                    </summary>
+                    <p class="text-slate-400 mt-3 group-open:animate-fadeIn">
+                        Utilizamos boas práticas e intervalos de mensagens para simular comportamento humano. Porém, sempre recomendamos o uso do WhatsApp Business e moderação no disparo em massa.
+                    </p>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-slate-950 border-t border-slate-900 pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-8 mb-12">
+                <div class="flex items-center gap-2">
+                    <img src="images/Logo.png" onerror="this.style.display='none'" class="w-8 h-8 object-contain opacity-50 grayscale hover:grayscale-0 transition-all">
+                    <span class="font-bold text-slate-500 tracking-wider hover:text-white transition-colors cursor-default">LOGIKA BOTS</span>
+                </div>
+                <div class="flex gap-6">
+                    <a href="https://www.instagram.com/logikabots" class="text-slate-400 hover:text-pink-500 transition-colors transform hover:scale-110"><i data-lucide="instagram"></i></a>
+                    <a href="https://www.facebook.com/profile.php?id=61585565086895" class="text-slate-400 hover:text-blue-500 transition-colors transform hover:scale-110"><i data-lucide="facebook"></i></a>
+                    <a href="mailto:logikabots@gmail.com" class="text-slate-400 hover:text-white transition-colors transform hover:scale-110"><i data-lucide="mail"></i></a>
+                </div>
+            </div>
+            <div class="text-center md:text-left border-t border-slate-900 pt-8 flex flex-col md:flex-row justify-between text-sm text-slate-600">
+                <p>&copy; 2025 Logika Bots. Todos os direitos reservados.</p>
+                <div class="flex gap-4 justify-center mt-4 md:mt-0">
+                    <a href="Termos.html" class="hover:text-slate-400 transition-colors">Termos de Uso</a>
+                    <a href="#" class="hover:text-slate-400 transition-colors">Privacidade</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script type="module">
+        import Typebot from 'https://cdn.jsdelivr.net/npm/@typebot.io/js@0/dist/web.js';
+        
+        // 1. INICIALIZAÇÃO DO TYPEBOT
+        Typebot.initStandard({ typebot: "my-typebot-rm3fpsx" });
+
+        // 2. SISTEMA DE MENU MOBILE
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const closeBtn = document.getElementById('close-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+        const body = document.body;
+
+        function toggleMenu() {
+            const isHidden = menu.classList.contains('translate-x-full');
+            if (isHidden) {
+                // Abrir Menu
+                menu.classList.remove('translate-x-full');
+                body.classList.add('mobile-menu-open');
+            } else {
+                // Fechar Menu
+                menu.classList.add('translate-x-full');
+                body.classList.remove('mobile-menu-open');
+            }
+        }
+
+        mobileBtn.addEventListener('click', toggleMenu);
+        closeBtn.addEventListener('click', toggleMenu);
+        
+        // Fecha o menu ao clicar em um link
+        menu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', toggleMenu);
+        });
+
+        // Navbar Blur on Scroll
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 20) {
+                nav.classList.add('shadow-lg', 'bg-slate-950/95');
+                nav.classList.remove('bg-slate-950/80');
+            } else {
+                nav.classList.remove('shadow-lg', 'bg-slate-950/95');
+                nav.classList.add('bg-slate-950/80');
+            }
+        });
+
+        // 3. CONEXÃO COM GOOGLE SHEETS
+        const SHEET_URL = 'SUA_CONEXAO';
+        const terminal = document.getElementById('terminal-logs');
+        const skeleton = document.getElementById('loading-skeleton');
+        const lastUpdateLabel = document.getElementById('last-update');
+        const statCount = document.getElementById('stat-count');
+        const statRevenue = document.getElementById('stat-revenue');
+
+        let isFetching = false;
+
+        
+        window.forceUpdate = function() {
+            if(isFetching) return;
+            const btn = document.querySelector('button[onclick="window.forceUpdate()"] i');
+            if(btn) btn.classList.add('animate-spin');
+            
+            setTimeout(() => {
+                fetchData();
+            }, 500);
+        };
+
+        async function fetchData() {
+            isFetching = true;
+            try {
+                const noCacheUrl = `${SHEET_URL}&t=${Date.now()}`;
+                
+                const res = await fetch(noCacheUrl);
+                
+                if (!res.ok) throw new Error('Erro na rede');
+                
+                const text = await res.text();
+                const rows = text.split('\n').slice(1); // Remove header
+                
+                terminal.innerHTML = '';
+                
+                const validRows = rows.filter(r => r && r.trim() !== '').slice(0, 100);
+                
+                let count = 0;
+                let revenue = 0;
+
+                if (validRows.length === 0) {
+                    terminal.innerHTML = '<div class="p-8 text-center text-slate-500">Nenhum registro encontrado ainda.</div>';
+                }
+
+                validRows.forEach(row => {
+                    // Parser seguro de CSV
+                    const cols = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+                    const clean = (val) => val ? val.replace(/^"|"$/g, '').trim() : '';
+
+                    // Mapeamento
+                    const hora = clean(cols[1]);
+                    const status = clean(cols[2]);
+                    const nome = clean(cols[3]) || 'Cliente';
+                    const servico = clean(cols[5]) || '-';
+                    const data = clean(cols[7]);
+                    const precoString = clean(cols[8]);
+
+                    if(!data) return; 
+
+                
+                    let statusHtml = `<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium bg-slate-800 text-slate-400 border border-slate-700">DESCONHECIDO</span>`;
+                    let rowClass = "opacity-60";
+                    let icon = "circle"; 
+
+                    const st = status.toLowerCase();
+
+                    if(st.includes('livre')) {
+                        statusHtml = `<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium bg-slate-800 text-slate-400 border border-slate-700">LIVRE</span>`;
+                        rowClass = "opacity-40 hover:opacity-80";
+                        icon = "circle";
+                    } else if (st.includes('ocupado') || st.includes('agendado')) {
+                        statusHtml = `<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium bg-blue-900/30 text-blue-400 border border-blue-500/30 animate-pulse">AGENDADO</span>`;
+                        rowClass = "opacity-100 bg-slate-800/30 border-l-2 border-blue-500";
+                        icon = "check-circle-2";
+                        count++;
+                        
+                        // Parse Valor
+                        const valor = parseFloat(precoString.replace('R$', '').replace('.', '').replace(',', '.'));
+                        if(!isNaN(valor)) revenue += valor;
+                    }
+
+                    // Template da Linha
+                    const html = `
+                    <div class="grid grid-cols-12 gap-4 px-6 py-3 border-b border-slate-800/50 items-center transition-all hover:bg-slate-800/50 ${rowClass} group">
+                        <div class="col-span-3 flex items-center gap-2 truncate">
+                            <i data-lucide="${icon}" class="w-3 h-3 ${st.includes('ocupado') ? 'text-blue-400' : 'text-slate-600'}"></i>
+                            <span class="font-medium text-slate-200 truncate" title="${nome}">${nome}</span>
+                        </div>
+                        <div class="col-span-3 text-slate-400 font-mono text-xs">
+                            ${data.substring(0,5)} <span class="text-slate-600">|</span> ${hora}
+                        </div>
+                        <div class="col-span-3 hidden md:block text-slate-400 text-xs truncate" title="${servico}">
+                            ${servico}
+                        </div>
+                        <div class="col-span-3 md:col-span-2 text-right font-mono text-emerald-400 text-xs">
+                            ${precoString}
+                        </div>
+                        <div class="col-span-3 md:col-span-1 text-right">
+                            ${statusHtml}
+                        </div>
+                    </div>
+                    `;
+                    terminal.insertAdjacentHTML('beforeend', html);
+                });
+
+                // Atualiza cards
+                statCount.innerText = count;
+                statRevenue.innerText = revenue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+                
+                // Atualiza label de tempo
+                const now = new Date();
+                lastUpdateLabel.innerText = `Sincronizado: ${now.toLocaleTimeString()}`;
+                lastUpdateLabel.classList.remove('text-red-500');
+
+            } catch (err) {
+                console.error(err);
+                lastUpdateLabel.innerText = "Falha na conexão";
+                lastUpdateLabel.classList.add('text-red-500');
+            } finally {
+                isFetching = false;
+                lucide.createIcons(); // Recria ícones nos novos elementos
+                const btn = document.querySelector('button[onclick="window.forceUpdate()"] i');
+                if(btn) btn.classList.remove('animate-spin');
+            }
+        }
+
+        // Loop automático (10s - Aumentado levemente para evitar spam no sheets)
+        setInterval(fetchData, 10000);
+        
+        // Primeira carga
+        fetchData();
+
+        // Inicializa ícones iniciais
+        lucide.createIcons();
+
+    </script>
+</body>
+</html>
