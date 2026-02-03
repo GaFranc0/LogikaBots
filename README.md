@@ -32,7 +32,7 @@ O projeto foi construído com foco em performance e design moderno:
 
 | Landing Page Principal | Simulador de Bot | Linktree Instagram |
 | :--- | :--- | :--- |
-| <img src="img/Landing-Page"> | ![Preview Mobile](https://via.placeholder.com/200x350?text=Preview+Simulador) | ![Preview Links](https://via.placeholder.com/200x350?text=Preview+Linktree) |
+| <img src="img/Landing-Page.PNG" width="400"> | <img src="img/Mobile.PNG" width="400"> | <img src="img/Link-Tree.PNG" width="400"> |
 
 > **Dica:** Para deixar seu portfólio incrível, suba prints reais do site na pasta `/img` do seu repositório e substitua os links acima!
 
